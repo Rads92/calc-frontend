@@ -22,7 +22,9 @@ function App() {
         <Route path="/ziola">
           <InnerNav name='Ziola'/>
         </Route>
-        <Route path="/ciasto">ciasto</Route>
+        <Route path="/ciasto">
+          <InnerNav name='Ciasto'/>
+        </Route>
       </Switch>
     </Router>
   );

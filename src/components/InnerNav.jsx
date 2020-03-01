@@ -2,16 +2,20 @@ import React, {useState, useCallback} from 'react'
 import Nav from 'react-bootstrap/Nav'
 import {ProductForm} from './ProductForm'
 import {StoreComponent} from './StoreComponent'
+import {CiastoForm} from './Ciasto';
 
 export const InnerNav = ({name}) => {
     const [activeTab, setActiveTab] = useState('magazyn');
-    const gotToStore = useCallback(
+    const goToStore = useCallback(
         () => setActiveTab('magazyn'),
         [],
     )
+    const productForm = name === 'Ciasto'
+        ? <CiastoForm goToStore={goToStore}/>
+        : <ProductForm name={name} goToStore={goToStore}/>;
     const content = activeTab === "magazyn"
-        ? <StoreComponent name={name} />
-        : <ProductForm name={name} goToStore={gotToStore}/>;
+        ? <StoreComponent name={name} goToStore={goToStore}/>
+        : productForm;
 
     return (
         <>

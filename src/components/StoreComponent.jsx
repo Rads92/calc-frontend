@@ -15,6 +15,7 @@ export const StoreComponent = ({name}) => {
         remove(`${nameLowerCase}/${id}`)
             .then(res => setProducts(res.data[nameLowerCase]))
     }
+    const isCiasto = nameLowerCase !== 'ciasto';
 
     return products.length
         ? (
@@ -24,23 +25,26 @@ export const StoreComponent = ({name}) => {
                         <th>#</th>
                         <th>Dostawa</th>
                         <th>Stan początkowy [kg]</th>
+                        {isCiasto && <th>Zużyte [kg]</th>}
                         <th>Stan obecny [kg]</th>
                         <th>Cena [zł/kg]</th>
-                        <th />
+                        {isCiasto && <th />}
                     </tr>
                 </thead>
                 <tbody>
                     {products.map((prod, index) => (
                         <tr key={`key-${prod.id}`}>
                             <td>{index + 1}</td>
-                            <td>{prod.dostawa}</td>
+                            <td>{prod.dostawa || prod.partia}</td>
                             <td>{prod.ilosc}</td>
+                            {isCiasto && <td>{prod.zuzyte}</td>}
                             <td>{prod.stan}</td>
                             <td>{prod.cena}</td>
                             <td>
+                                {prod.stan === prod.ilosc && (
                                 <Button variant="danger" onClick={() => deleteProduct(prod.id)}>
                                     Usuń
-                                </Button>
+                                </Button>)}
                             </td>
                         </tr>
                     ))}
